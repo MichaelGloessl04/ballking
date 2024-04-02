@@ -9,6 +9,7 @@
         "Nachname",
         "pydantic",
         "sqlalchemy",
+        "uvicorn",
         "Vorname"
     ]
 }

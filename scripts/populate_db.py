@@ -9,6 +9,7 @@ def get_students_from_xlsx(file_path: str):
         student = {
             'name': row['Vorname'],
             'surname': row['Nachname'],
+            'gender': row['gender'],
             'classes': row['Klasse'],
             'points': 0
         }
@@ -18,13 +19,14 @@ def get_students_from_xlsx(file_path: str):
 
 def add_students_to_db(students: list):
     for student in students:
-        response = requests.post('http://localhost:80/students',
+        response = requests.post('http://localhost:5000/students',
                                  json=student)
-        response = requests.get(
-            f'http://localhost:80/students/{response.json()["id"]}')
         if response.status_code != 200:
-            raise Exception(f'Error adding {student} to db')
-        print(f'Added {student} to db')
+            raise Exception('Error adding student to db')
+        else:
+            posted_student = response.json()
+            print(f"Added student {
+                posted_student['name']} {posted_student['surname']} to db")
 
 
 if __name__ == '__main__':
